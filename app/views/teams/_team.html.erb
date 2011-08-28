@@ -1,0 +1,5 @@
+  <% if current_user.username == team.user.username %>
+    <li class="me"><%= team.user.username %></li>
+  <% else %>
+    <li><%= team.user.username %></li>
+  <% end %>

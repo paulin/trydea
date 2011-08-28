@@ -1,0 +1,35 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<div class="mBottom10 line gray">
+    <h1 class="heading">Change your password</h1>
+</div>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="alarm">	
+    <h2>Change your password here.</h2>
+  	<p>The fields to the left should let you change your password.  If you are still having trouble please email <a href="mailto:support@trydea.com?subject=feedback">support@trydea.com</a></p>
+  </div> 
+<div class="notice">
+
+  <p><%= f.label :email %><br />
+  <%= f.text_field :email %></p>
+
+  <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <%= f.password_field :password %></p>
+
+  <p><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></p>
+
+  <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <%= f.password_field :current_password %></p>
+
+  <p><%= f.submit "Update" %></p>
+  </div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
+
+<%= link_to "Back", :back %>

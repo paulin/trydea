@@ -1,0 +1,187 @@
+<% title "Compare these stellar ideas", false %>
+<div class="mBottom10 line gray">
+    <%= link_to '', new_idea_path, :class => "lightbulb-btn" %>
+    <h1 class="heading">Which idea feels more valuable?</h1>  
+  </div>
+  <div id="ideasWrap">
+    <div class="idea punch borderblue" id="idea1">
+      <span class="idHolder" id="<%= @idea1.id %>"></span>
+      <h2 class="bold title"><%= @idea1.name %></h2>
+      <span class="description">
+        <%= @idea1.description %>      
+      </span>
+    </div>
+    <div class="idea punch bordergreen" id="idea2">
+      <span class="idHolder" id="<%= @idea2.id %>"></span>
+      <h2 class="bold title"><%= @idea2.name %></h2>
+      <span class="description">
+        <%= @idea2.description %>
+      </span>
+    </div>
+  </div>
+
+  <div class="cb"></div>
+  
+  <div id="actionsWrap">
+    <div class="actions left">
+      <a class="join <% if @idea1.users.exists?(current_user) %>hide<% end %>" id="join1" href="#">
+      		<strong>I want in!</strong>
+			<span>Join other users to work on this idea.</span>
+	  </a>
+      <a class="leave <% if !@idea1.users.exists?(current_user) %>hide<% end %>" id="leave1" href="#">
+        <strong>Signed up!</strong>
+        <span>Leave the team?</span>
+      </a>
+
+    </div>    
+    <div class="actions right">
+      <a class="join <% if @idea2.users.exists?(current_user) %>hide<% end %>" id="join2" href="#">
+      	<strong>I want in!</strong>
+		<span>Join other users to work on this idea.</span>
+	  </a>
+      <a class="leave <% if !@idea2.users.exists?(current_user) %>hide<% end %>" id="leave2" href="#">
+        <strong>Signed up!</strong>
+        <span>Leave the team?</span>
+      </a>
+      
+    </div>
+
+    <div class="actions left">
+        <a class="info" id="info1" href="/ideas/<%= @idea1.id %>">
+        	<strong>About this Idea</strong>
+			<span>Feedback and whatnot.</span>
+		</a>
+    </div>
+    <div class="actions right">
+      	<a class="info" id="info2" href="/ideas/<%= @idea2.id %>">
+      		<strong>More About this Idea</strong>
+			<span>Feedback and whatnot.</span>
+		</a>
+    </div>    
+  </div>  
+
+
+<script type="text/javascript">
+  $(function(){
+  var idea1 = $("#idea1 span.idHolder").attr("id");
+  var idea2 = $("#idea2 span.idHolder").attr("id");
+  adjustHeight(idea1,idea2);
+  chooseIdea();
+  
+  user = "<%= current_user.username %>";
+  uid = <%= current_user.id %>;
+
+  $(".join").click(function(){
+      jId = $(this)[0].id.split("join")[1];
+      iid = $("#idea" + jId + " .idHolder").attr("id");
+  		$.get("/team/join_team", { ideaid: iid, userid:uid},function(response){
+  			if(response == "success"){
+  			  $("#join" + jId).addClass("hide").hide();
+  			  $("#leave" + jId).removeClass("hide").show();
+  			}
+  		});			
+  	return false
+  });
+  
+  $(".leave").click(function(){
+    jId = $(this)[0].id.split("leave")[1];
+    iid = $("#idea" + jId + " .idHolder").attr("id");
+  		$.get("/team/leave_team", { ideaid: iid, userid:uid  },function(response){
+  			if(response == "success"){
+  			  $("#leave" + jId).addClass("hide").hide();
+  			  $("#join" + jId).removeClass("hide").show();
+  			}
+  	});
+  	return false
+  });
+    
+  
+});
+
+
+
+function adjustHeight(){
+  idea1 = $("#idea1");
+  idea2 = $("#idea2");
+  idea1OH = idea1.outerHeight();
+  idea2OH = idea2.outerHeight();
+  idea1Height = idea1.height();
+  idea2Height = idea2.height();
+  if(idea1Height > idea2Height ){ 
+    idea2.height(idea1Height);
+  } else if(idea1Height < idea2Height){
+    idea1.height(idea2Height);
+  } else if(idea1Height == idea2Height){
+  } 
+  return;
+}
+
+function chooseIdea(){
+  $('#idea1').click(function(){
+  idea1Id = $("#idea1 span.idHolder").attr("id");
+  idea2Id = $("#idea2 span.idHolder").attr("id");
+	$.get("/idea_comparator/update_values", { winner: idea1Id, loser: idea2Id },
+	   function(response){
+        updateIdeas(response);
+	   });	
+  });
+
+  $('#idea2').click(function(){
+  idea1Id = $("#idea1 span.idHolder").attr("id");
+  idea2Id = $("#idea2 span.idHolder").attr("id");    
+	$.get("/idea_comparator/update_values", { winner: idea2Id, loser: idea1Id },
+	   function(response){
+        updateIdeas(response)
+	   });	
+  });
+}
+
+function updateIdeas(response){
+  var obj = jQuery.parseJSON(response);
+  $('#ideasWrap').animate({opacity:0},250,function(response){
+    // new elements
+    $("#idea1").attr("style","");
+    $("#idea1 h2").html(obj.idea1.idea.name);
+    $("#idea1 span.description").html(obj.idea1.idea.description);
+    $("#idea1 span.idHolder").attr("id", obj.idea1.idea.id);
+    $("#idea1").attr("class","idea punch border" + randomColor());
+  
+    $("#idea2").attr("style","");
+    $("#idea2 h2").html(obj.idea2.idea.name);
+    $("#idea2 span.description").html(obj.idea2.idea.description);
+    $("#idea2 span.idHolder").attr("id", obj.idea2.idea.id);      
+    $("#idea2").attr("class","idea punch border" + randomColor());
+			
+    adjustHeight();
+  }); 
+  
+  $('#actionsWrap').animate({opacity:0},250,function(response){
+  	    $("#info1").attr("href", "/ideas/" + obj.idea1.idea.id);      
+    $("#info2").attr("href", "/ideas/" + obj.idea2.idea.id);      
+	
+	if (obj.idea1join) {
+	  $("#leave1").removeClass("hide");
+	  $("#join1").addClass("hide");				
+	} else {
+	  $("#leave1").addClass("hide");
+	  $("#join1").removeClass("hide");		
+	} 
+	if (obj.idea2join) {
+	  $("#leave2").removeClass("hide");
+	  $("#join2").addClass("hide");				
+	} else {
+	  $("#leave2").addClass("hide");
+	  $("#join2").removeClass("hide");		
+	} 
+  });
+  
+  $('#ideasWrap').animate({opacity:1},250); 
+  $('#actionsWrap').animate({opacity:1},250); 
+}
+
+function randomColor(){
+  colors = [ "blue", "green", "red", "orange", "yellow", "purple"]
+  var color = colors[Math.floor(Math.random()*colors.length)]
+  return color;  
+}
+</script>

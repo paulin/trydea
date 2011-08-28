@@ -1,0 +1,23 @@
+        <div id="user_nav">
+          <div class="tab">
+            <a id="logo" href="/"></a>
+            <% if user_signed_in? %>
+              <div id="menu">
+                <%= link_to 'Ideas', ideas_path %>
+                <%= link_to 'New Idea', new_idea_path %>
+                <%= link_to 'Idea Comparator', '/idea_comparator' %>
+                <%= link_to "About", about_path %>
+              </div>
+            </div>
+            <div class="account">
+           		<%= link_to current_user.username , user_path(current_user) %>
+              <%= link_to "Sign out", destroy_user_session_path %>			  
+            </div>
+            <% else %>
+          </div>
+            <div class="account">
+              <%= link_to "Sign up", new_user_registration_path, :id => "signup" %> or 
+              <%= link_to "Sign in", new_user_session_path, :id => "signin" %>
+            </div>
+          <% end %>
+        </div>

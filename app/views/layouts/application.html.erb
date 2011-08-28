@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= yield(:title) || "tryDea" %></title>
+        <title>tryDea</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+<!-- old way        <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico"> -->
+        <%= render "layouts/stylesheets" %>
+        <%= javascript_include_tag "jquery", "application" %>
+        <%= csrf_meta_tag %>
+        <script type="text/javascript">
+            
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-992700-8']);
+            _gaq.push(['_trackPageview']);
+            
+            (function(){
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+    <body>
+        <%= render 'layouts/idea_informer' %>
+        <%= render 'layouts/header' %>
+        <div class="content boxed rounded">
+            <!-- 2 LETS USE THE CUSTOM ERROR/NOTICE MESSAGES BELOW   -->
+            <% flash.each do |name, msg| %>
+           	<%= content_tag :p, msg, :id => "flash_#{name}", :class => "#{name}" %>
+            <% end %>
+            <%= content_tag :h1, yield(:title) if show_title? %>
+            <%= yield %>
+            <!--			<%= params.inspect %>-->
+        </div>
+        <%= render 'layouts/footer' %>
+    </body>
+</html>

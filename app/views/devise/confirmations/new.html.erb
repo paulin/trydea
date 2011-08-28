@@ -1,0 +1,23 @@
+<% title "Resend confirmation instructions", false %>
+<div class="mBottom10 line gray">
+    <h1 class="heading">Resend confirmation instructions</h1>
+</div>
+
+
+<%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
+	    <%= devise_error_messages! %>
+		<div class="alarm">	
+		<h2>Can't find your confirmation instructions?</h2>
+			<p>The fields to the left should get you going again.  If you are still having trouble please email <a href="mailto:support@trydea.com?subject=feedback">support@trydea.com</a></p>
+		</div> 
+		<div class="notice">
+		<p id="email">
+		  <%= f.label :email %>
+		  <%= f.text_field :email %>
+		</p>
+
+  		<p><%= f.submit "Resend confirmation instructions" %></p>
+	</div>
+<% end %>
+
+<%= render :partial => "devise/shared/links" %>

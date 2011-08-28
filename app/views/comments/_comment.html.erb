@@ -1,0 +1,18 @@
+<% title "tryDea comments section lets you share thoughts about ideas.",false %>
+
+<div class="<%= comment.comment_type %>">   
+  <h5 class="type"><%= comment.comment_type %></h5>
+  <div class="text">
+    <%= comment.comment %>
+  </div>
+  <div class="meta">
+    Posted by <cite class="author"><%= comment.commenter %></cite>   
+    <%=time_ago_in_words(comment.created_at)%> ago<br />
+  </div>
+
+  <!-- <div class="action">
+    <%= link_to 'Destroy Comment', [comment.idea, comment],
+                 :confirm => 'Are you sure?',
+                 :method => :delete %>
+  </div> -->
+</div>

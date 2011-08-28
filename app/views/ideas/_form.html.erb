@@ -1,0 +1,13 @@
+<%= form_for(@idea) do |f| %>
+  <div class="field">
+    <label>Name Your Idea</label>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <label>Describe Your Idea</label>
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

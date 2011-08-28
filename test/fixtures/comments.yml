@@ -1,0 +1,26 @@
+# == Schema Information
+# Schema version: 20110408140910
+#
+# Table name: comments
+#
+#  id           :integer         not null, primary key
+#  commenter    :string(255)
+#  comment      :text
+#  idea_id      :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  comment_type :text            default("")
+#  user_id      :integer
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  commenter: MyString
+  comment: MyText
+  idea: 
+
+two:
+  commenter: MyString
+  comment: MyText
+  idea: 

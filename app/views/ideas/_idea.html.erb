@@ -1,0 +1,19 @@
+  <tr id="row<%= idea.id%>">
+    <td class="name">
+      <%= link_to idea.name, idea %>
+    </td>
+    <td class="pct"><%= idea.calc_score %></td>
+    <td class="score"><%= idea.score %></td>
+    <td class="fights"><%= idea.compare_count %></td>
+    <td class="desc"><%= idea.description %></td>
+    <td class="team_count"><%= idea.teams_count %></td>
+    <td class="actions">
+	 	<% if idea.users.exists?(current_user) %>
+      <a href="#" id="iid<%= idea.id%>-<%= current_user.id%>" class="leave_team">Leave</a>
+	    	<a href="#" id="iid<%= idea.id%>-<%= current_user.id%>" class="hidden join_team">Join</a>
+		<% else %>
+      		<a href="#" id="iid<%= idea.id%>-<%= current_user.id%>" class="hidden leave_team">Leave</a>
+	    	<a href="#" id="iid<%= idea.id%>-<%= current_user.id%>" class="join_team">Join</a>
+		<% end %>    	
+    </td>
+  </tr>

@@ -1,0 +1,2 @@
+module IdeaComparatorHelper
+end

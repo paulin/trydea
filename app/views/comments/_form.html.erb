@@ -1,0 +1,12 @@
+<% titel "Please leave a comment.", false %>
+<%= form_for([@idea, @idea.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.text_field :commenter %>
+  </div>
+  <div class="field">
+    <%= f.text_area :comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

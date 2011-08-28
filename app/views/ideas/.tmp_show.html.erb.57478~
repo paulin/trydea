@@ -1,0 +1,183 @@
+<% title "Join other users to work on #{@idea.name} at tryDea.", false %>
+
+<p id="notice"><%= notice %></p>
+    
+<div id="description">
+  <div class="mTop0 mBottom20 line gray"><h1 class="heading blue shadow">About this idea</h1></div>
+  <div id="actionsWrap">
+    <div class="actions">
+
+      <a class="join <% if @idea.users.exists?(current_user) %>hide<% end %>
+" id="join1" href="#">
+        <strong>I want in!</strong>
+        <span>Join other users to work on this idea.</span>
+      </a>
+      
+      <a class="leave <% if !@idea.users.exists?(current_user) %>hide<% end %>
+" id="leave1" href="#">
+        <strong>Signed up!</strong>
+        <span>Leave the team?</span>
+      </a>
+    </div>
+  </div>
+  <h3><%= @idea.name %></h3>
+  <%= @idea.description %>
+</div>
+
+<div id="team">
+  <div class="mTop20 mBottom20 line gray">
+    <h2 class="heading blue shadow">The Team</h2>  
+  </div>
+    
+  <ul class="members">
+    <% if @idea.teams.length > 0 %>
+      <span><%= render @idea.teams %></span>
+    <% else %>
+      <p>No one has joined this team. :(</p>
+    <% end %>
+  </ul>
+</div>
+
+<div class="comments">
+  <div class="mTop20 mBottom20 line gray">
+    <h2 class="heading blue shadow">Feedback</h2>
+  </div>
+  
+  <div id="filter">
+    <ul>
+      <li><a href="#" class="active all">All Feedback</a></li>      
+      <li><a href="#" class="comments">Comments</a></li>
+      <li><a href="#" class="names">Names</a></li>
+      <li><a href="#" class="features">Features</a></li>
+      <li><a href="#" class="comps">Competitors</a></li>
+    </ul>
+  </div>
+
+  <div class="list">
+    <% if @idea.comments.length > 0 %>
+      <%= render @idea.comments %>
+    <% else %>
+      <div class="nofeedback">
+        <h3>No feedback has been given.</h3>
+      </div>
+    <% end %>
+  </div>
+    
+  <%= form_for([@idea, @idea.comments.build]) do |f| %>
+    <div class="field">
+    	<%= f.hidden_field :user_id, :value => current_user.id %>
+    </div>
+    <div class="field">
+    	<%= select_tag :comment_type , options_for_select([ "Comment", "Naming Suggestion", "Feature Suggestion", "Competitor" ], "Comment") %>    
+    <div class="field">
+      <%= f.text_area :comment %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+  
+  iid = <%= @idea.id%>;
+  user = "<%= current_user.username %>";
+  uid = <%= current_user.id %>;
+
+$(".join").click(function(){
+		$.get("/team/join_team", { ideaid: iid, userid:uid},function(response){
+			if(response == "success"){
+			  $(".join").addClass("hide").hide();
+			  $(".leave").removeClass("hide").show();
+			  $(".members span").append("<li class='me'>" + user + "</li>");
+			}
+		});			
+	return false
+});
+
+$(".leave").click(function(){
+	$.get("/team/leave_team", { ideaid: iid, userid:uid  },function(response){
+			if(response == "success"){
+			  $(".leave").addClass("hide").hide();
+			  $(".join").removeClass("hide").show();
+			  $(".me").remove();
+			}
+	});			
+	return false
+});
+
+
+  var filter = $("#filter");
+  var filters = $("#filter a");
+  updateFilters(filter);
+        
+  function updateFilters(){
+    Comments = $(".Comment");
+    Features = $(".Feature");
+    Competitors = $(".Competitor");
+    Names = $(".Naming");
+    if(Comments.length <= 0){
+      $(".comments",filter).hide();
+    } 
+    if(Features.length <= 0){
+      $(".features",filter).hide();    
+    }
+    if(Competitors.length <= 0){
+      $(".comps",filter).hide();        
+    } 
+    if(Names.length <= 0){
+      $(".names",filter).hide();  
+    }
+    if($(".list > div").length <=1){
+      $(filter).hide();
+    }
+  }
+  
+  var comments = $(".list > div");
+
+  function makeActiveFilter(el){
+    filters.each(function(){
+      $(this).removeClass('active');
+    })
+    el.toggleClass('active');
+  }  
+  
+  $(".names",filter).click(function(){
+    comments.hide();
+    $(".Naming").fadeIn();
+    $("h5.type",comments).hide();
+    makeActiveFilter($(this));
+  });
+  
+  $(".comps",filter).click(function(){
+    comments.hide();
+    $(".Competitor").fadeIn();
+    $("h5.type",comments).hide();
+    makeActiveFilter($(this));
+  });
+  
+  $(".features",filter).click(function(){
+    comments.hide();
+    $(".Feature").fadeIn();     
+    $("h5.type",comments).hide();
+    makeActiveFilter($(this));
+  });
+  
+  $(".comments",filter).click(function(){
+    comments.hide();
+    $(".Comment").fadeIn();     
+    $("h5.type",comments).hide();
+    makeActiveFilter($(this));
+  }); 
+
+  $(".all",filter).click(function(){
+    comments.hide();
+    $(".Feature,.Competitor,.Comment,.Naming").fadeIn();
+    $("h5.type",comments).show();
+    makeActiveFilter($(this));
+  }); 
+  
+});
+</script>

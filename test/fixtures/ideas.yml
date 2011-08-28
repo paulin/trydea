@@ -1,0 +1,24 @@
+# == Schema Information
+# Schema version: 20110408140910
+#
+# Table name: ideas
+#
+#  id            :integer         not null, primary key
+#  name          :string(255)
+#  description   :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#  score         :float           default(0.0)
+#  compare_count :integer         default(0)
+#  teams_count   :integer         default(0)
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+
+two:
+  name: MyString
+  description: MyText

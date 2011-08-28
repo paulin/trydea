@@ -1,0 +1,2 @@
+module MobileGatewayOpenHelper
+end

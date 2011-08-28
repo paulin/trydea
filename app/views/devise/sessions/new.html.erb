@@ -1,0 +1,35 @@
+<% title "Sign in", false %>
+
+<div class="mBottom10 line gray">
+    <h1 class="heading">Sign In</h1>
+</div>
+<div id="signin">
+  <div class="alarm">
+    <h3>We are in Alpha!</h3>
+    <p>We are now in an Alpha release.  Which means we now are backing up the data and won't go and erase it. However, this is still private for the <a href="http://seattlethinktank.com"> Seattle Think Tank</a> community.  </p>
+    <p>If you would like to know when we open it up to more people, then <a href="http://twitter.com/trydea_apps">follow us on Twitter</a>. We will keep you posted when everything is ready!</p>
+    <p>For any other questions please contact <a href="mailto:info@trydea.com?subject=tryDea">info@trydea.com</a></p>
+  </div>
+  <div class="notice">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <p class="signin_username">
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </p>
+    <p class="signin_password">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
+    <p class="signin_button">
+        <%= f.submit "Sign in" %>
+    </p>    
+    <% if devise_mapping.rememberable? -%>
+      <p class="check">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </p>
+    <% end -%>    
+    <div class="devise"><%= render :partial => "devise/shared/links" %></div>
+  <% end %>
+  </div>
+</div>

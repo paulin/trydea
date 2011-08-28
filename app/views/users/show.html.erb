@@ -1,0 +1,73 @@
+
+<h2>Greetings! <%= "#{@user.username} " %>: member for <%= time_ago_in_words(@user.created_at)%></h1>
+Need to <%= link_to "edit your profile", edit_user_registration_path(current_user) %>? 
+<p>
+<p>
+
+
+<div class="mBottom10 line gray">
+    <h1 class="heading">Ideas you joined </h1>
+</div>
+<% if @ideas.length > 0 %>
+	<table id="ideas">
+	  <tr>
+	    <th class="name">Name</th>
+	    <th class="pct">%</th>
+	    <th class="score">Score</th>
+	    <th class="fights">Fights</th>
+	    <th class="desc" >Description</th>
+	    <th class="team" >Team</th>
+	    <th class="actions">Joined</th>	
+	  </tr>
+	<%= render @ideas %>
+	</table>
+
+<% else %>
+    <div class="nofeedback">
+      <h3>You have not joined any ideas.</h3>
+    </div>
+<% end %>
+<script type="text/javascript">
+	$(function(){
+	  //$("#ideas tr").click(function(){
+	  //  var rowID = $(this)[0].id.split("row")[1];
+	  //  document.location.href="/ideas/" + rowID;
+	  //});
+	  
+		$(".join_team").click(function(){
+  		  iid = $(this)[0].id;
+  			tempStr = iid.split("iid")[1]
+  			idNumber = tempStr.split("-")[0]
+  			userId = tempStr.split("-")[1]
+			
+			//Adam started trying to figure out how to walk up the tree and increment or decrement the team count for the row
+			//row = $(this)[0].parents("tr");
+			//console.log(row);
+		
+  			$.get("/team/join_team", { ideaid: idNumber, userid:userId },function(response){
+  				if(response == "success"){
+  				  $(".join_team#" + iid).hide();
+  				  $(".leave_team#" + iid).show();
+  				}
+  			});			
+			return false
+		});
+
+		$(".leave_team").click(function(){
+		    iid = $(this)[0].id;
+  			idNumber = iid.split("iid")[1]
+  			tempStr = iid.split("iid")[1]
+  			idNumber = tempStr.split("-")[0]
+  			userId = tempStr.split("-")[1]			
+			
+			$.get("/team/leave_team", { ideaid: idNumber, userid:userId  },function(response){
+  				if(response == "success"){
+  				  $(".join_team#" + iid).show();
+  				  $(".leave_team#" + iid).hide();
+  				}
+			});			
+			return false
+		});
+		
+	});
+</script>

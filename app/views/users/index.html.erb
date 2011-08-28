@@ -1,0 +1,13 @@
+<% title "Listing Current Active Members" %>
+
+<% for user in @users %>
+<table>
+	<tr>
+		<% unless current_user %>
+		<td><%= link_to "#{user.username} #{user.email}", user_path(user)%></td>
+		<% else %>
+		<td><%= "#{user.username} #{user.email }" %></td>
+		<% end %>
+	</tr>
+</table>
+<% end %>

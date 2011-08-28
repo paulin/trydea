@@ -1,0 +1,35 @@
+<% title "Add a New tryDea", false %>
+
+<div class="mBottom10 mTop0 line gray">
+  <h1 class="heading">Add a New Idea</h1>  
+</div>
+
+  <% if @idea.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@idea.errors.count, "error") %> 
+        prohibited this idea from being saved:
+      </h2>
+
+      <ul>
+      <% @idea.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+<div class="instructions">
+<h3 class="mBottom10 heading">Got an idea to share?</h3>
+<p>Go ahead and add it to the collective thoughts of tryDea.  Other users can comment, rate, and join you if you decide to build it. </p>
+
+<div class="ownership notice">
+  <h4>A Note about Idea Ownership</h4>
+  <p>Our philosophy is that if you want to keep an idea secret, then do not talk about it. In our experience the more an idea is talked about the stronger it becomes. But, the trade-off is that you must take the leap and loose some control of it. If a person is interested in your idea then you should join forces to produce it. Any ideas contributed to tryDea is considered public domain and these are fair game for anyone who wants to build it. What we would encourage is when you are taken by an idea, join the team.</p>
+</div>
+
+</div>
+
+<div class="newIdea">
+<%= render 'form' %>
+</div>
