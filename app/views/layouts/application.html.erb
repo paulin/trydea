@@ -4,9 +4,9 @@
         <title><%= yield(:title) || "tryDea" %></title>
         <title>tryDea</title>
 		<link rel="shortcut icon" href="/favicon.ico" />
-<!-- old way        <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico"> -->
-        <%= render "layouts/stylesheets" %>
-        <%= javascript_include_tag "jquery", "application" %>
+<!-- old way  <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico"> -->
+        <%= stylesheet_link_tag "application" %>
+        <%= javascript_include_tag "application" %>
         <%= csrf_meta_tag %>
         <script type="text/javascript">
             
