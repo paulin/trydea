@@ -16,8 +16,12 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/test.sqlite3
+  adapter: mysql2
+  encoding: latin1
+  reconnect: true
   pool: 5
   timeout: 5000
-
+  host: mysql
+  database: trydea
+  username: trydea
+  password: VIh3lo7165B
