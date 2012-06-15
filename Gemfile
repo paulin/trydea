@@ -7,6 +7,7 @@ gem "kaminari"
 gem "haml"
 gem "haml-rails"
 gem 'jquery-rails'
+gem "pg"
 
 
 group :assets do 
