@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-gem 'sqlite3'
 gem 'devise'
 gem "kaminari"
 gem "haml"
@@ -17,4 +16,5 @@ end
 
 group :development, :test do
   gem "rspec-rails"
+  gem 'sqlite3'
 end
