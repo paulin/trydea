@@ -9,7 +9,7 @@ gem 'jquery-rails'
 gem "pg"
 
 group :assets do 
-  gem "sass-rails", " ~> 3.1.0"
+  gem 'sass-rails', :git => 'git://github.com/rails/sass-rails.git', :branch => '3-1-stable'
   gem "coffee-rails", "~> 3.1.0"
   gem "uglifier"
 end
