@@ -8,7 +8,7 @@ gem "haml"
 gem "haml-rails"
 gem 'jquery-rails'
 gem "pg"
-
+gem 'therubyracer'
 
 group :assets do 
   gem "sass-rails", " ~> 3.1.0"
