@@ -8,9 +8,6 @@ gem "haml"
 gem "haml-rails"
 gem 'jquery-rails'
 gem "pg"
-group :production do
- gem 'therubyracer-heroku'
-end
 
 group :assets do 
   gem "sass-rails", " ~> 3.1.0"
