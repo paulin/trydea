@@ -16,7 +16,7 @@ development:
       reconnect: true
       pool: 5
       timeout: 5000
-      host: localhost  
+      host: localhost
       username: trydea
       password: pugetworks # from psql setup, see Postgresql
       database: trydea_dev
@@ -31,21 +31,12 @@ test:
   timeout: 5000
 
 production:
-  adapter: postgresql
+  adapter: mysql2
   encoding: latin1
   reconnect: true
   pool: 5
   timeout: 5000
-  host: localhost  
+  host: mysql
+  database: trydea
   username: trydea
-  password: trydea # from psql setup, see Postgresql
-  database: trydea_prod
-#  adapter: mysql2
-#  encoding: latin1
-#  reconnect: true
-#  pool: 5
-#  timeout: 5000
-#  host: mysql
-#  database: trydea
-#  username: trydea
-#  password: VIh3lo7165B
+  password: VIh3lo7165B
