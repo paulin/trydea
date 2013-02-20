@@ -7,12 +7,12 @@ gem "kaminari"
 gem "haml"
 gem "haml-rails"
 gem 'jquery-rails'
-gem "heroku"
+#gem "heroku"
 gem 'devise-encryptable'
 
 group :production do
-  gem "pg"
-  gem "mysql2"
+#  gem "pg"
+#   gem "mysql2"
 end
 
 group :assets do 
