@@ -9,12 +9,30 @@
       @search = "name"
     end
     
-    if @search == "name"
-      @ideas = Idea.order(@search + " ASC").page(params[:page]).per(20)  
-    else 
-      @ideas = Idea.order(@search + " DESC").page(params[:page]).per(20)  
+    puts "Session search: #{session[@search]}"
+    if(session[@search].nil? || session[@search] == "DESC")
+      session[@search] = "ASC"
+      puts "Set to ASC"
+    else
+      session[@search] = "DESC"
+      puts "Set to DESC"
     end
-
+    
+    if @search == "name"
+      @ideas = Idea.order(@search + " #{session[@search]}").page(params[:page]).per(20)  
+    else 
+      @ideas = Idea.order(@search + " #{session[@search]}").page(params[:page]).per(20)  
+    end
+    
+    puts "Searching!!! Searching!!! Searrrrrching!"
+    puts "Ideas num: #{@ideas.count}"
+    
+    if(!@ideas.nil?)
+            @ideas.each do |i|
+              puts "Created at #{i.created_at}"
+            end
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ideas }

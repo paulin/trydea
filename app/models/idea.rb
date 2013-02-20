@@ -14,6 +14,7 @@
 #
 
 class Idea < ActiveRecord::Base
+  
   attr_accessible :name, :score, :compare_count, :description, :teams_count
   validates :name,  :presence => true
   validates :description, :presence => true,
